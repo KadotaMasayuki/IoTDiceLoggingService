@@ -1,0 +1,12 @@
+﻿[log]
+c:\IoTDice\Log
+
+[com]
+COM6
+
+[relay]
+80000000	自分
+
+[face]
+820303CA	my_dice1	face1	面2	面3	面4	面5	面6
+820303CB	俺	面１	面２	面３	面４	面５	面６
