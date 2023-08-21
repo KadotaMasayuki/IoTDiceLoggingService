@@ -52,7 +52,7 @@ TWELITE CUEの仕様のままであり、
 ■受信方法
 
 MONO-WIRELESS製のMONOSTICK ( https://mono-wireless.com/jp/products/MoNoStick/index.html ) をPCの
-USBポートに接続し、RS232Cとして監視。これが受信した―データを読み出す。
+USBポートに接続し、RS232Cとして監視。これが受信したデータを読み出す。
 
 
 ■データ形式
