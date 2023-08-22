@@ -14,15 +14,31 @@ MONO-WIRELESS製のTWELITE CUE ( https://mono-wireless.com/jp/products/twelite-c
 ※蓄積したデータを分析・表示するプログラムは同梱しない。
 
 
+■構成
+
+Windows PC ( Windows10 Pro 22H2 にて動作確認済み )
+　・・本プログラムを実行する
+MONO-WIRELESS製TWELITE CUE ( https://mono-wireless.com/jp/products/twelite-cue/index.html )
+　・・「6つの状態を持つ無線スイッチ」として使う
+MONO-WIRELESS製MONOSTICK ( https://mono-wireless.com/jp/products/MoNoStick/index.html )
+　・・Windows PCのUSBポートに接続し、TWELITE CUEからのデータを受信する
+　・・必要があれば中継器のファームウェアを書き込んだMONOSTICKを追加して、距離を延ばすことができる
+
+
 ■コンパイル
 
-コマンドラインから以下を実行します。
+コマンドラインから以下を実行します。開発環境のインストールは不要です。
 
 > c:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild   IoTDiceLoggingService.csproj
 
 
+以下のファイルが生成されます
 
-■警告が３つ出ることがあります。
+　bin/Debug/IoTDiceLoggingService.exe
+　bin/Debug/Settings.txt
+
+
+警告が３つ出ることがあります。
 
 warning MSB3644: フレームワーク ".NETFramework,Version=v4.7.2" の参照アセンブリが見つかりませんでした。
 →出来上がったファイルを実行する際に、DotNetFramework 4.7.2以上があれば良いです
@@ -35,9 +51,15 @@ warning MSB3270: 構築されているプロ ジェクトのプロセッサ ア�
 →問題ないようです
 
 
-■成果物
+■インストール方法
 
-bin/Debug/IoTDiceLoggingService.exe
+以下を配置する。
+
+　c:\IoTDice\bin\IotDiceLoggingService.exe
+　c:\IoTDice\bin\Settings.txt
+
+Controlフォルダ内の「INSTALL_administrator.bat」を管理者権限で実行する。
+Controlフォルダ内の「CHECK.bat」を実行し、動作しているか確認する。
 
 
 ■6つの状態の送信方法
@@ -52,13 +74,12 @@ TWELITE CUEの仕様のままであり、
 ■受信方法
 
 MONO-WIRELESS製のMONOSTICK ( https://mono-wireless.com/jp/products/MoNoStick/index.html ) をPCの
-USBポートに接続し、RS232Cとして監視。これが受信したデータを読み出す。
+USBポートに接続し、本プログラムがRS232Cとして監視。
 
 
 ■データ形式
 
 容量が多いため下部に記載
-
 
 
 ■ログの書式
@@ -129,7 +150,7 @@ TWELITE_CUEをMONOSTICKの上に置き、TWELITE_CUEに磁石を何度か近づ�
 させると、MONOSTICKのターミナルで「設定成功」と表示されるので、次のTWELITE_CUEも設定する。
 
 
-■サービスのインストール等（PowerShellの場合：PowerShellバージョンが古いと削除できないため、PowerShellでの操作はお勧めしない）
+■インストール方法の解説（PowerShellの場合：PowerShellバージョンが古いと削除できないため、PowerShellでの操作はお勧めしない）
 
 PowerShell (バージョン5.1で可能なことを確認済み) 管理者モードでインストールする
 https://learn.microsoft.com/ja-jp/powershell/module/microsoft.powershell.management/new-service?view=powershell-7.3
@@ -152,7 +173,7 @@ https://learn.microsoft.com/ja-jp/powershell/module/microsoft.powershell.managem
  remove-service -name IoTDiceLoggingService
 
 
-■サービスのインストール等（コマンドラインでSCコマンド。オススメ）
+■インストール方法の解説（コマンドラインでSCコマンド。オススメ。「Control」フォルダ内のバッチファイルはこの方法で実施）
 
 ◇インストール
 sc create  -  https://windows.command-ref.com/cmd-sc-create.html
