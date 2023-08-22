@@ -1,17 +1,13 @@
 ■機能
 
-MONO-WIRELESS製のTWELITE CUE ( https://mono-wireless.com/jp/products/twelite-cue/index.html ) の
-ケース表面に示されているサイコロ目を利用し、「6つの状態を持つ無線スイッチ」としてそのデータを蓄積
-するための、Windows用プログラム。
-サービスとして動作し、ログイン不要のシステムアカウント "LocalSystem" で動作させる。
-設定ファイルにより、受信データの保存先フォルダと、COMポート番号と、6面の名称を変更できる。
-サービスを開始したタイミングで設定が読みなおされる。設定を変更したら、サービスを停止し再度開始す
-れば、新しい設定で動作する。
-データを受信したタイミングで、RS232Cを読み出し、TWELITE CUEのデータであれば、加速度センサ値を整
-形し、ログ保存する。
-加速度センサは、X,Y,Zそれぞれ10個の値が送信されるため、その値を計算して、上になっている面を推定
-する。
-※蓄積したデータを分析・表示するプログラムは同梱しない。
+MONO-WIRELESS製のTWELITE CUE ( https://mono-wireless.com/jp/products/twelite-cue/index.html ) を「6つの状態を持つ無線スイッチ」として、そのケース表面に示されているサイコロ目を受信・蓄積するための、Windows用プログラムです。
+受信するためには、MONO-WIRELESS製TWELITE CUE ( https://mono-wireless.com/jp/products/twelite-cue/index.html ) をWindowsPCに接続する必要があります。
+Windowsサービスとして動作します。
+インストール時の指定によって、ログイン不要のシステムアカウント "LocalSystem" で動作させます。
+設定ファイルを用いることで、受信データの保存先フォルダと、COMポート番号と、6面の名称、スイッチの名称、中継器があればその名称、を変更できます。
+サービスを開始したタイミングで設定が読みなおされます。設定を変更したら、サービスを停止し再度開始すれば、新しい設定で動作します。
+データを受信したタイミングで、TWELITE CUEのデータであれば、加速度センサ値を整形し、ログ保存します。
+※蓄積したデータを分析・表示するプログラムは同梱しません。
 
 
 ■構成
@@ -32,7 +28,7 @@ MONO-WIRELESS製MONOSTICK ( https://mono-wireless.com/jp/products/MoNoStick/inde
 > c:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild   IoTDiceLoggingService.csproj
 
 
-以下のファイルが生成されます
+以下のファイルが生成されます。
 
 　bin/Debug/IoTDiceLoggingService.exe
 　bin/Debug/Settings.txt
@@ -43,8 +39,7 @@ MONO-WIRELESS製MONOSTICK ( https://mono-wireless.com/jp/products/MoNoStick/inde
 warning MSB3644: フレームワーク ".NETFramework,Version=v4.7.2" の参照アセンブリが見つかりませんでした。
 →出来上がったファイルを実行する際に、DotNetFramework 4.7.2以上があれば良いです
 
-warning MSB3270: 構築されているプロ ジェクトのプロセッサ アーキテクチャ "MSIL" と、参照 "C:\Windows\Microsoft.NET\Framework64\v4.0.30319\mscorlib.dll" のプロセッサ アーキテクチャ "AMD64" の間には不一致がありま
-した。
+warning MSB3270: 構築されているプロ ジェクトのプロセッサ アーキテクチャ "MSIL" と、参照 "C:\Windows\Microsoft.NET\Framework64\v4.0.30319\mscorlib.dll" のプロセッサ アーキテクチャ "AMD64" の間には不一致がありました。
 →問題ないようです
 
 warning MSB3270: 構築されているプロ ジェクトのプロセッサ アーキテクチャ "MSIL" と、参照 "System.Data" のプロセッサ アーキテクチャ "AMD64" の間には不一致がありました。
@@ -53,43 +48,34 @@ warning MSB3270: 構築されているプロ ジェクトのプロセッサ ア�
 
 ■インストール方法
 
-以下を配置する。
+以下を配置してください。
 
 　c:\IoTDice\bin\IotDiceLoggingService.exe
 　c:\IoTDice\bin\Settings.txt
 
-Controlフォルダ内の「INSTALL_administrator.bat」を管理者権限で実行する。
-Controlフォルダ内の「CHECK.bat」を実行し、動作しているか確認する。
+Controlフォルダ内の「INSTALL_administrator.bat」を管理者権限で実行することで、インストールできます。
+Controlフォルダ内の「CHECK.bat」を実行することで、インストールが成功したか、動作しているか、といった情報を確認できます。
 
 
 ■6つの状態の送信方法
 
 TWELITE CUEの仕様のままであり、
+
 ・定期的にTWELITE CUEの状態を送信
 ・衝撃が与えられた時のTWELITE CUEの状態を送信
-する。
-この時送信される加速度データを用いて、上を向いている面を本プログラムが推定する。
 
-
-■受信方法
-
-MONO-WIRELESS製のMONOSTICK ( https://mono-wireless.com/jp/products/MoNoStick/index.html ) をPCの
-USBポートに接続し、本プログラムがRS232Cとして監視。
-
-
-■データ形式
-
-容量が多いため下部に記載
+します。この時送信される加速度データを用いて、上を向いている面を本プログラムが推定します。
+推定方法は単純で、X,Y,Zそれぞれ10個の加速度データが送信されるため、それぞれの値を平均して、もっとも絶対値の大きい値をもとに、上になっている面を推定します。
 
 
 ■ログの書式
 
-BOMありUTF8、改行コードはCRLF、タブ区切り、で記述する。
-ファイル名は、4桁の年、ハイフン、2桁の月、ハイフン、2桁の日、.csv とする。（例　2023-08-15.csv）
-その年月日に受信したデータはそのファイルの末尾に追記する。
+BOMありUTF8、改行コードはCRLF、タブ区切り、で記述します。
+ファイル名は、4桁の年、ハイフン、2桁の月、ハイフン、2桁の日、.csv です。（例　2023-08-15.csv）
+その年月日に受信したデータはそのファイルの末尾に追記します。
 例： 2023/5/30 19:08:30 に取得したデータは、2023-05-30.csv に記録される。
-1行目は列ヘッダーとする。
-2行目から実データとする。
+1行目は列ヘッダー。
+2行目から実データ。
 データの並びは、
     TWELITE_CUEの8桁のシリアルID
     このシリアルIDを持つTWELITE_CUEの呼び名（設定ファイルより）
@@ -107,11 +93,11 @@ BOMありUTF8、改行コードはCRLF、タブ区切り、で記述する。
 
 ■設定ファイルの書式
 
-BOMありUTF8、タブ区切り、改行コードはCRLF、で記述する。
+BOMありUTF8、タブ区切り、改行コードはCRLF、で記述します。
 ファイル名は "Settings.txt"。
-ファイルの場所は、PCソフトと同じフォルダ。
+ファイルの場所は、本プログラムと同じフォルダ。
 
-'[' と ']' で囲んだキーワード行から、次のキーワード行までの間、そのキーワードの設定を記述する
+'[' と ']' で囲んだキーワード行から、次のキーワード行までの間に、そのキーワードの設定を記述します。
 
 [log]
 ログを記録するフォルダのパス（例：C:\test\log）
@@ -128,7 +114,7 @@ TWELITE CUEの8桁のID、その呼び名、面１の呼び名、面２の、、
 1行に1個、必要分だけ記載する
 
 ※以下は未実装
-ログフォルダの代わりに、データベースサーバーに記録することもできる
+ログフォルダの代わりに、データベースサーバーに記録することもできるようになると良いな
 [database]
 サーバーアドレス
 アカウント
@@ -138,16 +124,18 @@ TWELITE CUEの8桁のID、その呼び名、面１の呼び名、面２の、、
 
 ■TWELITE CUEの設定
 
-未設定のままでも使えるが、電池を長もちさせるために送信間隔を長くする設定（↓）を行う。
+TWELITE CUEは購入時のまま未設定でも使えます。
+電池を長もちさせるために、送信間隔を長くする設定（↓）を行うと良いです。
+※必要とするログの記録間隔に合わせて調整してください
 
 TWE-Programmer（例：TWE-Programmer_0_3_7_5.zip）を用い、MONOSTICKにAPP_CUE用のOTAファームウェア
 （例：App_CUE_OTA_BLUE_L1304_V1-0-2.bin）を書き込む。
 TWE-ProgrammerでMONOSTICKのターミナルを表示する。
 送信間隔を、集計間隔より30秒程度短くする（例：5分間隔で集計するなら、4分30秒＝270秒にする。
 送信間隔をできるだけ長くすることで電池の持ちが良くなる）。
-設定を保存する。これで、この設定を連続して書き込むことができる。
-TWELITE_CUEをMONOSTICKの上に置き、TWELITE_CUEに磁石を何度か近づけてTWELITE_CUEのLEDを何度か点滅
-させると、MONOSTICKのターミナルで「設定成功」と表示されるので、次のTWELITE_CUEも設定する。
+設定を保存する。これで、この設定を複数のTWELITE CUEに連続して書き込むことができる。
+TWELITE_CUEをMONOSTICKの上に置き、TWELITE_CUEに磁石を何度か近づけてTWELITE_CUEのLEDを何度か点滅させると、MONOSTICKのターミナルで「設定成功」と表示される。
+次のTWELITE_CUEを設定する。
 
 
 ■インストール方法の解説（PowerShellの場合：PowerShellバージョンが古いと削除できないため、PowerShellでの操作はお勧めしない）
@@ -200,8 +188,10 @@ sc stop  -  https://windows.command-ref.com/cmd-sc-stop.html
 ◇状態確認
 sc query  -  https://windows.command-ref.com/cmd-sc-query.html
   <通常プロンプト>  sc  query  ServiceName
-  ※ 動いていれば STATE : 4 RUNNING と表示される
-  ※ sc queryex や、 sc qc もいろいろ情報が出る。
+  サービスが動いていれば
+     STATE : 4 RUNNING
+  と表示される
+  sc queryex や、 sc qc もいろいろ情報が出る。
 
 
 ■送信データの書式（TWELITE_CUE のファームウェア app_cue からのデータ）
@@ -237,9 +227,9 @@ sc query  -  https://windows.command-ref.com/cmd-sc-query.html
     80	：　磁石が近くにない。(タイマーによる定期送信)
     81	：　磁石のN極が近くにある。(タイマーによる定期送信)
     82	：　磁石がS極が近くにある。(タイマーによる定期送信)
-	
 
-■送信データの中の、加速度データ[103:103+12]...の意味（XYZ軸の重力加速度）	
+
+■送信データの中の、加速度データ[103:103+12]...の意味（XYZ軸の重力加速度）
     0010FFF10123　：　X=0x0010(=16mg), Y=0xFFF1(=-15mg), Z=0x0123(=291mg)
     静止状態では +1024 ～ -1048[mg] 程度の範囲を示す
 
