@@ -52,6 +52,8 @@ namespace IoTDiceLoggingService
         // イベントログ
         private System.Diagnostics.EventLog eventLog1;
         private int eventId = 1;
+		private uint eventMsgSkipCount = 0;
+		private string lastEventMsg = "";
 
         // サービスステータス
         [DllImport("advapi32.dll", SetLastError = true)]
@@ -88,9 +90,19 @@ namespace IoTDiceLoggingService
         }
 
         // イベントログ書込み
+		// 同一ログは100回目ごとに書き込む
         public void WriteEventLog(string msg, EventLogEntryType type)
         {
+			if (msg.Equals(lastEventMsg))
+			{
+				if (++eventMsgSkipCount <= 100)
+				{
+					return;
+				}
+			}
             eventLog1.WriteEntry(msg, type, eventId++);
+			eventMsgSkipCount = 0;
+			lastEventMsg = msg;
         }
 
         // サービススタート
