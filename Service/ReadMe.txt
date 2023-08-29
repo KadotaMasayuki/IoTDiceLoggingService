@@ -128,17 +128,35 @@ TWELITE CUEは購入時のまま未設定でも使えます。
 電池を長もちさせるために、送信間隔を長くする設定（↓）を行うと良いです。
 ※必要とするログの記録間隔に合わせて調整してください
 
-TWE-Programmer（例：TWE-Programmer_0_3_7_5.zip）を用い、MONOSTICKにAPP_CUE用のOTAファームウェア
+TWE-Programmer ( https://tweprogrammer.twelite.info/ )（例：TWE-Programmer_0_3_7_5.zip）を用い、MONOSTICKにAPP_CUE用のOTAファームウェア
 （例：App_CUE_OTA_BLUE_L1304_V1-0-2.bin）を書き込む。
 TWE-ProgrammerでMONOSTICKのターミナルを表示する。
-送信間隔を、集計間隔より30秒程度短くする（例：5分間隔で集計するなら、4分30秒＝270秒にする。
-送信間隔をできるだけ長くすることで電池の持ちが良くなる）。
-設定を保存する。これで、この設定を複数のTWELITE CUEに連続して書き込むことができる。
-TWELITE_CUEをMONOSTICKの上に置き、TWELITE_CUEに磁石を何度か近づけてTWELITE_CUEのLEDを何度か点滅させると、MONOSTICKのターミナルで「設定成功」と表示される。
-次のTWELITE_CUEを設定する。
+送信間隔 't' を、集計間隔より30秒程度短くする（例：5分間隔で集計するなら、4分30秒＝270秒にする。送信間隔をできるだけ長くすることで電池の持ちが良くなる）。
+設定を保存する 'S' 。これで、この設定を複数のTWELITE CUEに連続して書き込むことができる。
+
+設定後の状態
+--- CONFIG/App_CUE V1-01-1/SID=0x810aaaaa/LID=0x01 ---
+ a: set Application ID (0x67720102)
+ i: set Device ID (--)
+ c: set Channels (18)
+ x: set Tx Power (13)
+ b: set UART baud (38400)
+ B: set UART option (8N1)
+ k: set Enc Key (0xA5A5A5A5)
+ o: set Option Bits (0x00000001)
+ t: set Transmission Interval (270)
+ p: set Senser Parameter (0x00000000)
+---
+ S: save Configuration
+ R: reset to Defaults
+ *** POWER ON TWELITE CUE NEAR THIS CONFIGURATOR ***
+
+このまま、TWELITE_CUEをMONOSTICKの上に置き、TWELITE_CUEに磁石を近づけたり遠ざけたりを5回以上繰り返しTWELITE_CUEのLEDを何度か点滅させると、MONOSTICKのターミナルで「OTA SUCCESS」と表示される。
+設定を終えたTWELITE_CUEをMONOSTICKから遠ざけ、次のTWELITE_CUEをMONOSTICKの上に置き、同じように磁石を操作することで、同一の設定ができる。
+使用するTWELITE_CUE全てにこの操作を行い設定する。
 
 
-■インストール方法の解説（PowerShellの場合：PowerShellバージョンが古いと削除できないため、PowerShellでの操作はお勧めしない）
+■サービスインストール方法の解説（PowerShellの場合：PowerShellバージョンが古いとサービス削除コマンドがないため、PowerShellでの操作はお勧めしない）
 
 PowerShell (バージョン5.1で可能なことを確認済み) 管理者モードでインストールする
 https://learn.microsoft.com/ja-jp/powershell/module/microsoft.powershell.management/new-service?view=powershell-7.3
