@@ -130,11 +130,11 @@ TWELITE CUEは購入時のまま未設定でも使えます。
 
 TWE-Programmer ( https://tweprogrammer.twelite.info/ )（例：TWE-Programmer_0_3_7_5.zip）を用い、MONOSTICKにAPP_CUE用のOTAファームウェア
 （例：App_CUE_OTA_BLUE_L1304_V1-0-2.bin）を書き込む。
-TWE-ProgrammerでMONOSTICKのターミナルを表示する。
+TWE-ProgrammerでMONOSTICKのインタラクティブターミナルを表示する。
 送信間隔 't' を、集計間隔より30秒程度短くする（例：5分間隔で集計するなら、4分30秒＝270秒にする。送信間隔をできるだけ長くすることで電池の持ちが良くなる）。
-設定を保存する 'S' 。これで、この設定を複数のTWELITE CUEに連続して書き込むことができる。
+設定を保存する 'S' 。これで、このMONOSTICKからこの設定を複数のTWELITE CUEに連続して書き込むことができる。
 
-設定後の状態
+設定後のMONOSTICKの状態
 --- CONFIG/App_CUE V1-01-1/SID=0x810aaaaa/LID=0x01 ---
  a: set Application ID (0x67720102)
  i: set Device ID (--)
@@ -151,7 +151,8 @@ TWE-ProgrammerでMONOSTICKのターミナルを表示する。
  R: reset to Defaults
  *** POWER ON TWELITE CUE NEAR THIS CONFIGURATOR ***
 
-このまま、TWELITE_CUEをMONOSTICKの上に置き、TWELITE_CUEに磁石を近づけたり遠ざけたりを5回以上繰り返しTWELITE_CUEのLEDを何度か点滅させると、MONOSTICKのターミナルで「OTA SUCCESS」と表示される。
+このまま、TWELITE_CUEをMONOSTICKの上に置き、TWELITE_CUEに磁石を近づけたり遠ざけたりを5回以上繰り返すと、TWELITE_CUEのLEDとMONOSTICKのLEDが点滅し、OTA設定が完了する。MONOSTICKのターミナルに「SUCCESS」と表示されれば成功。失敗は
+「FAILURE」。ゆっくり磁石を操作すると成功しやすい。
 設定を終えたTWELITE_CUEをMONOSTICKから遠ざけ、次のTWELITE_CUEをMONOSTICKの上に置き、同じように磁石を操作することで、同一の設定ができる。
 使用するTWELITE_CUE全てにこの操作を行い設定する。
 
