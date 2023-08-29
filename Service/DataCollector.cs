@@ -18,8 +18,8 @@ namespace IoTDiceLoggingService
 {
     public class DataCollector
     {
-        // エラーカウント。数回連続すると運転停止
-        int errorCount = 0;
+        // // エラーカウント。数回連続すると運転停止
+        // int errorCount = 0;
 
         // イベントログを伝播するため
         Service1 service = null;
@@ -94,7 +94,7 @@ namespace IoTDiceLoggingService
                 if (frame1[0].Equals(':') && frame1.Length >= 299)
                 {
                     // データ完結したので解析開始
-                    DataCollect(frame1);
+                    CollectData(frame1);
                 }
                 // 次のデータのために解析済み部分と終端記号'0x0d,0x0a'を削除
                 // 先行データが壊れて完結しない場合もここで削除できる
@@ -102,7 +102,8 @@ namespace IoTDiceLoggingService
             }
         }
 
-        private void DataCollect(string dataFrame)
+		// データを解析して保存する
+        private void CollectData(string dataFrame)
         {
             string relaySerialNumber;  // 中継器のID[1:1+8]
             Int16 lqi;  // 電波強度[9:9+2]
@@ -195,10 +196,19 @@ namespace IoTDiceLoggingService
                 }
 
                 // ログファイル用に整形し格納する
-                Log log = new Log( deviceSerialNumber, Settings.GetDiceNameBySerialNumber(deviceSerialNumber),
-                        relaySerialNumber, Settings.GetRelayNameBySerialNumber(relaySerialNumber),
-                        batteryMv, faceNumber, Settings.GetDiceFaceBySerialNumber(deviceSerialNumber, faceNumber),
-                        accX, accY, accZ, lqi, DateTime.Now);
+                Log log = new Log(
+						deviceSerialNumber,
+						Settings.GetDiceNameBySerialNumber(deviceSerialNumber),
+                        relaySerialNumber,
+						Settings.GetRelayNameBySerialNumber(relaySerialNumber),
+                        batteryMv,
+						faceNumber,
+						Settings.GetDiceFaceBySerialNumber(deviceSerialNumber, faceNumber),
+                        accX,
+						accY,
+						accZ,
+						lqi,
+						DateTime.Now);
 
                 // ログを保存する
                 StoreLog(log);
@@ -212,33 +222,35 @@ namespace IoTDiceLoggingService
             }
         }
 
+		// ログ保存
         private void StoreLog(Log log)
         {
             // 保存先ディレクトリを確保
             try
             {
                 System.IO.Directory.CreateDirectory(Settings.logDir);
-                errorCount = 0;  // エラー回数クリア
+                // errorCount = 0;  // エラー回数クリア
             }
             catch
             {
-                // 連続してエラーしたときに停止する
-                errorCount++;
-                if (errorCount > 10)
-                {
-                    if (service != null)
-                    {
-                        service.WriteEventLog("can not get directory <" + Settings.logDir + ">(" + errorCount.ToString() + ") ... service stop", System.Diagnostics.EventLogEntryType.Error);
-                        service.Stop();
-                    }
-                }
-                else
-                {
-                    if (service != null)
-                    {
-                        service.WriteEventLog("can not get directory <" + Settings.logDir + ">(" + errorCount.ToString() + ")", System.Diagnostics.EventLogEntryType.Error);
-                    }
-                }
+                // // 連続してエラーしたときに停止する
+                // errorCount++;
+                // if (errorCount > 10)
+                // {
+                //     if (service != null)
+                //     {
+                //         service.WriteEventLog("can not get directory <" + Settings.logDir + ">(" + errorCount.ToString() + ") ... service stop", System.Diagnostics.EventLogEntryType.Error);
+                //         service.Stop();
+                //     }
+                // }
+                // else
+                // {
+                //     if (service != null)
+                //     {
+                //         service.WriteEventLog("can not get directory <" + Settings.logDir + ">(" + errorCount.ToString() + ")", System.Diagnostics.EventLogEntryType.Error);
+                //     }
+                // }
+                service.WriteEventLog("can not get directory <" + Settings.logDir + ">", System.Diagnostics.EventLogEntryType.Error);
             }
 
             // ログを取得する
@@ -268,27 +280,28 @@ namespace IoTDiceLoggingService
                     }
                     writer.WriteLine(data);
                 }
-                errorCount = 0;  // エラー回数クリア
+                // errorCount = 0;  // エラー回数クリア
             }
             catch
             {
-                // 連続してエラーしたときに停止する
-                errorCount++;
-                if (errorCount > 10)
-                {
-                    if (service != null)
-                    {
-                        service.WriteEventLog("can not write log <" + logPath + ">(" + errorCount.ToString() + ") ... service stop", System.Diagnostics.EventLogEntryType.Error);
-                        service.Stop();
-                    }
-                }
-                else
-                {
-                    if (service != null)
-                    {
-                        service.WriteEventLog("can not write log <" + logPath + ">(" + errorCount.ToString() + ")", System.Diagnostics.EventLogEntryType.Error);
-                    }
-                }
+                // // 連続してエラーしたときに停止する
+                // errorCount++;
+                // if (errorCount > 10)
+                // {
+                //     if (service != null)
+                //     {
+                //         service.WriteEventLog("can not write log <" + logPath + ">(" + errorCount.ToString() + ") ... service stop", System.Diagnostics.EventLogEntryType.Error);
+                //         service.Stop();
+                //     }
+                // }
+                // else
+                // {
+                //     if (service != null)
+                //     {
+                //         service.WriteEventLog("can not write log <" + logPath + ">(" + errorCount.ToString() + ")", System.Diagnostics.EventLogEntryType.Error);
+                //     }
+                // }
+                service.WriteEventLog("can not write log <" + logPath + ">", System.Diagnostics.EventLogEntryType.Error);
             }
         }
     }
