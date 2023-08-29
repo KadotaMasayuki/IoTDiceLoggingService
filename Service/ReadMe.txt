@@ -53,8 +53,14 @@ warning MSB3270: 構築されているプロ ジェクトのプロセッサ ア�
 　c:\IoTDice\bin\IotDiceLoggingService.exe
 　c:\IoTDice\bin\Settings.txt
 
+MONOSTICKをUSBポートに接続し、COMポートとして認識させてください。
+その後、Settings.txtと、MONOSTICKのCOMポート番号を合わせてください。COMポートの速度やビット長などの設定は不要です。
+
 Controlフォルダ内の「INSTALL_administrator.bat」を管理者権限で実行することで、インストールできます。
 Controlフォルダ内の「CHECK.bat」を実行することで、インストールが成功したか、動作しているか、といった情報を確認できます。
+状態が「START PENDING」の場合、1分程度待ってからもう一度「CHECK.bat」を実行してみてください。
+RUNNINGにならない場合、COMポートの番号が違っている可能性があります。設定を確認し、正しい構成であることが確認できたら、「STOP.bat」を管理者権限で実行し、数秒待ってから「START.bat」を管理者権限で実行してください。その後、「CHECK.bat」を実行し、RUNNNINGになっていることを確認してください。
+TWELITE_CUEに衝撃を加えるか、規定の時間が経過するたびに、上面の情報が c:/IoTDice/Log に保存されます。
 
 
 ■6つの状態の送信方法
