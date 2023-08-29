@@ -21,8 +21,11 @@ namespace IoTDiceLoggingService
         Int16 LQI;
         DateTime dt;
 
-        public Log(string deviceSerialNumber, string deviceName, string relaySerialNumber, string relayName,
-        Int32 batteryMv, Int32 faceNumber, string faceName, Int32 accX, Int32 accY, Int32 accZ, Int16 LQI, DateTime dt)
+        public Log(string deviceSerialNumber, string deviceName,
+				string relaySerialNumber, string relayName,
+				Int32 batteryMv, Int32 faceNumber, string faceName,
+				Int32 accX, Int32 accY, Int32 accZ,
+				Int16 LQI, DateTime dt)
         {
             this.deviceSerialNumber = deviceSerialNumber;
             this.deviceName = deviceName;
